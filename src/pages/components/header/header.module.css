@@ -1,0 +1,10 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+.headerSection__title{
+    font-size: 57px;
+}
+.headerSection__desc{
+    font-size: 28px;
+}

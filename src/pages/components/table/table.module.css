@@ -1,0 +1,17 @@
+.containerTable{
+    margin-top: 64px;
+    overflow-x: scroll;
+}
+.table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.table__head{
+    color: #8E8E93;
+}
+.table__row{
+    border-bottom: 1px solid lightgray;
+}
+.table__col{
+    padding: 10px;
+}
