@@ -14,30 +14,55 @@
 .table__col{
     padding: 10px;
     max-width: 20%;
+    min-width: 15%;
+}
+.table__col:first-child{
+    padding: 10px;
+    max-width: 10%;
+    font-size: 11px;
+    color: #666666;
+    border-right: 1px solid lightgray;
+}
+.tableSelect{
+    padding: 4px;
+    background-color: transparent;
+    border: 1px solid lightgray;
 }
 .table__input{
     background-color: transparent;
     width: 100%;
     padding: 5px 10px;
+    border: 0;
+}
+.table__input:invalid{
+    color: #ef3131;
+    outline: 1px solid #ef3131;
 }
 .table__btn{
     border: 0;
-    padding: 10px 4px;
+    padding: 5px;
     font-size: 12px;
     cursor: pointer;
     border-radius: 10px;
 }
 .table__btn_add{
-    background-color: #169816;
-    color: #ffffff;
+    background-color: #e8fbe8;
+    color: #666;
+    border: 1px solid #30e417;
 }
 .table__btn_remove{
-    background-color: #b70922;
-    color: #ffffff;
+    background-color: #fdccc3;
+    color: #666;
+    border: 1px solid #f53920;
 }
 .btnContainer{
     margin-top: 40px;
     display: flex;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     justify-content: space-between;
+}
+.btnContainer_top{
+    margin-top: 5px;
+    justify-content: space-around;
 }

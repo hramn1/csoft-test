@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "eslint": "eslint --ext .tsx --ext .ts src/"
   },
   "dependencies": {
     "react": "19.0.0-rc-02c0e824-20241028",
@@ -19,6 +20,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "15.0.2"
+    "eslint-config-next": "15.0.2",
+    "eslint-config-htmlacademy": "9.1.1"
   }
 }

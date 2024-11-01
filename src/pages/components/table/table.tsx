@@ -1,4 +1,4 @@
-import styles from "./table.module.css";
+import styles from './table.module.css';
 import {useState} from 'react';
 
 type tableCell = {
@@ -14,63 +14,63 @@ type tableRow = {
     value: string,
 }
 
-const TableContainer = () => {
-    const [rows, setRows] = useState<tableRow[]>( [
+function TableContainer() {
+    const [rows, setRows] = useState<tableRow[]>([
         {
-            title: "label",
+            title: 'Row-1',
             id: 1,
-            value: "",
+            value: '',
         },
         {
-            title: "label",
+            title: 'Row-2',
             id: 2,
-            value: "",
+            value: '',
         },
         {
-            title: "label",
+            title: 'Row-3',
             id: 3,
-            value: "",
+            value: '',
         },
         {
-            title: "label",
+            title: 'Row-4',
             id: 4,
-            value: "",
-        }
+            value: '',
+        },
     ]);
-    const [cells, setCells] = useState<string[][]>([["","","",""], ["","","",""]]);
-    const [columns, setColumns] = useState<tableCell[]>( [
+    const [cells, setCells] = useState<string[][]>([['', '', '', ''], ['', '', '', '']]);
+    const [columns, setColumns] = useState<tableCell[]>([
         {
-            title: "Column1",
+            title: 'Column1',
             id: 1,
-            dataType: "string",
+            dataType: 'string',
         },
         {
-            title: "Column2",
+            title: 'Column2',
             id: 2,
-            dataType: "string",
-        }
+            dataType: 'string',
+        },
     ]);
 
     const handleDataTypeChange = (id: number, type: string) => {
-        const newColumns : tableCell[] = columns.map((item)=>{
-            if(item.id == id){
-                item.dataType = type
+        const newColumns: tableCell[] = columns.map((item) => {
+            if (item.id === id) {
+                item.dataType = type;
             }
-            return item
-        })
-
-        setColumns(newColumns)
+            return item;
+        });
+        setColumns(newColumns);
     };
+
     const addColumn = () => {
         let count = columns[columns.length - 1]?.id ? columns[columns.length - 1].id : 0;
-        count++
+        count++;
         setColumns([...columns, {
             title: `Column-${count}`,
             id: count,
-            dataType: "string",
+            dataType: 'string',
         }]);
-        const newCells = [...cells]
-        newCells.push(Array(cells[0].length).fill(""));
+        const newCells = [...cells];
+        newCells.push(Array(rows.length).fill(''));
         setCells(newCells);
     };
     const addRow = () => {
@@ -79,82 +79,99 @@ const TableContainer = () => {
         setRows([...rows, {
             title: `Row-${count}`,
             id: count,
-            value: ""
+            value: '',
         }]);
-        const newCels = [...cells]
-        newCels.map((item)=>{
-            item.push("")
-        })
-        setCells(newCels)
+        const newCells = [...cells];
+        newCells.map((item) => {
+            item.push('');
+        });
+        setCells(newCells);
     };
-    const removeRow = (id: number ) => {
+    const removeRow = (id: number, rowIndex: number) => {
         setRows(rows.filter((item) => item.id !== id));
-        setCells(cells.map((item) => {
-           return item.filter((it,index) => index !== id -1)
-        }));
+        setCells(cells.map((item) => item.filter((it, index) => index !== rowIndex)));
     };
-    const removeColumn = (id: number) => {
+    const removeColumn = (id: number, cellIndex: number) => {
         setColumns(columns.filter((item) => item.id !== id));
-        setCells(cells.filter((it,index) => index !== id -1))
+        setCells(cells.filter((it, index) => index !== cellIndex));
     };
     const handleCellChange = (rowIndex: number, cellIndex: number, value: string) => {
         const newCells = [...cells];
         newCells[cellIndex][rowIndex] = value;
         setCells(newCells);
-        console.log(newCells)
     };
-    const handleGenerateJson = ()=>{
-        const jsonObj  = [...columns]
-        jsonObj.map((item, index)=>{item.rows = cells[index]})
-        console.log(JSON.stringify(jsonObj, null, 2));
-    }
+    const handleGenerateJson = () => {
+        const jsonObj = [...columns];
+        jsonObj.map((item, index) => {
+            item.rows = cells[index];
+        });
+        console.log(JSON.stringify(jsonObj, null, 1));
+    };
 
     return (
         <section className={styles.containerTable}>
             <form action="">
-                <table className={styles.table} >
+                <table className={styles.table}>
                     <thead className={styles.table__head}>
                     <tr className={styles.table__row}>
-                        {columns.map(({title, id}) => (
-                            <th className={styles.table__col}  key={id}>
-                                    <span>{title}</span>
+                        <th className={styles.table__col}>
+                            Строки
+                        </th>
+                        {columns.map(({title, id}, cellIndex) => (
+                            <th className={styles.table__col} key={id}>
+                                <p>{title}</p>
+                                <div className={`${styles.btnContainer} ${styles.btnContainer_top}`}>
                                     <select
+                                        className={styles.tableSelect}
                                         onChange={(evt) => handleDataTypeChange(id, evt.target.value)}
-
                                     >
                                         <option value="string">Строка</option>
                                         <option value="percent">%</option>
                                     </select>
                                     <button
-                                        onClick={() => removeColumn(id)}
+                                        onClick={() => removeColumn(id, cellIndex)}
                                         className={`${styles.table__btn} ${styles.table__btn_remove}`}
-                                                                                type={"button"}>Удалить</button>
+                                        type={'button'}
+                                    >Удалить
+                                    </button>
+                                </div>
                             </th>
                         ))}
                         <th className={styles.table__col}>
                             <button
                                 className={`${styles.table__btn} ${styles.table__btn_add}`}
-                                type={"button"}
+                                type={'button'}
                                 onClick={addColumn}
-                            >Добавить Столбец</button>
+                            >Добавить Столбец
+                            </button>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {rows.map(({id}) => (
+                    {rows.map(({id, title}, rowIndex) => (
                         <tr className={styles.table__row} key={id}>
+                            <td className={styles.table__col}>
+                                {title}
+                            </td>
                             {columns.map((cell, cellIndex) => (
-                                <td className={styles.table__col}  key={cellIndex}>
+                                <td className={styles.table__col} key={cell.id}>
                                     <input
-                                        onChange={(evt) => handleCellChange(id-1, cellIndex, evt.target.value)}
-                                         type={cell.dataType === "string" ? "string" : "number"} className={styles.table__input}/>
+                                        onChange={(evt) => handleCellChange(rowIndex, cellIndex, evt.target.value)}
+                                        type={cell.dataType === 'string' ? 'string' : 'number'}
+                                        className={styles.table__input}
+                                        placeholder={'Данные'}
+                                        value={cells[cellIndex][rowIndex]}
+                                    />
                                 </td>
                             ))}
                             <td className={styles.table__col}>
                                 <button
                                     className={`${styles.table__btn} ${styles.table__btn_remove}`}
-                                    onClick={()=>removeRow(id)} type={"button"}>Удалить</button>
-                            </td></tr>
+                                    onClick={() => removeRow(id, rowIndex)} type={'button'}
+                                >Удалить
+                                </button>
+                            </td>
+                        </tr>
                     ))}
                     </tbody>
                 </table>
@@ -162,13 +179,20 @@ const TableContainer = () => {
             <div className={styles.btnContainer}>
                 <button
                     className={`${styles.table__btn} ${styles.table__btn_add}`}
-                    type={"button"}
-                    onClick={addRow}>Добавить Строку
+                    type={'button'}
+                    onClick={addRow}
+                >Добавить Строку
                 </button>
-                <button onClick={handleGenerateJson} className={`${styles.table__btn} ${styles.table__btn_add}`} >Сгенерировать JSON</button>
+                <button
+                    onClick={handleGenerateJson}
+                    type={'button'}
+                    className={`${styles.table__btn} ${styles.table__btn_add}`}
+                >Сгенерировать JSON
+                </button>
             </div>
         </section>
     );
-};
+}
 
 export default TableContainer;
+
