@@ -4,7 +4,6 @@
 }
 .table{
     border-collapse: collapse;
-    width: 100%;
 }
 .table__head{
     color: #8E8E93;
@@ -14,4 +13,31 @@
 }
 .table__col{
     padding: 10px;
+    max-width: 20%;
+}
+.table__input{
+    background-color: transparent;
+    width: 100%;
+    padding: 5px 10px;
+}
+.table__btn{
+    border: 0;
+    padding: 10px 4px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.table__btn_add{
+    background-color: #169816;
+    color: #ffffff;
+}
+.table__btn_remove{
+    background-color: #b70922;
+    color: #ffffff;
+}
+.btnContainer{
+    margin-top: 40px;
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
 }
